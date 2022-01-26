@@ -144,6 +144,41 @@ export default debounce
 
 ```
 
+### 用函数的方式调用组件
+
+```vue
+<template>
+  <div class="custom-popover" :class="popoverClass" :style="{width: (width / 192) + 'rem'}">
+    <div class="popover-title">
+      <span>{{title}}</span>
+      <span class="el-icon-close" @click="closeWindow"></span>
+    </div>
+    <div class="popover-content">
+      <component :is="pageValue" :params='params'></component>
+    </div>
+  </div>
+</template>
+```
+
+```js
+import Vue from 'vue';
+import popover from './popover.vue';
+const getPopover = Vue.extend(popover);
+export default $popover = function(obj){
+	const getCon = new getPopover(obj).$mount();
+    document.body.appendChild(getCon.$el);
+    
+}
+getCon.$el.parentNode.removeChild(getCon.$el);
+```
+
+```js
+import showPopover from './$popover';
+showPopover(obj)
+```
+
+
+
 ### this.$set
 
 当在对象或者数组添加新的属性，视图没有更新时，可以使用这个api
