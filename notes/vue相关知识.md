@@ -367,6 +367,8 @@ history模式不带#号，history路由是HTML5新增的API（history.pushState�
 
 #### 路由权限
 
+公共路由
+
 从根据用户信息接口访问一个路由信息接口，或者用户信息接口自带路由信息
 
 ```js
@@ -427,7 +429,7 @@ export const loadView = (view) => { // 路由懒加载
 export default permission
 ```
 
-使用addrouter动态添加api返回的路由信息实现路由权限
+在前置路由守卫使用addrouter动态添加api返回的路由信息实现路由权限
 
 ```js
   store.dispatch('GenerateRoutes', { roles }).then(accessRoutes => {
