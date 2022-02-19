@@ -35,5 +35,77 @@ express的中间件中执行异步函数，执行顺序不会按照洋葱模型�
 express 内置了很多中间件，集成度高，使用省心，
 koa 轻量简洁，容易定制
 
-#### 
+## 封装数据池
+
+```js
+let mysql = require('mysql')
+//配置链接数据库参数
+let config = {
+    host : 'localhost',
+    port : 3306,//端口号
+    database : 'nodetest',//数据库名
+    user : 'root',//数据库用户名
+    password : '123456'//数据库密码
+};
+let pool = mysql.createPool(config)
+
+let sqlConnect=function(sq1，sqlArr，calklback){
+pool.getConnection((err，conn)=>{
+	console.1og（'连接成功）;
+   if(err){
+	console.1og（'连接失败”）；
+ 	return；
+	}
+//事件驱动回调
+conn.query(sq1，sqlArr，calklback)；
+//释放链接
+conn.release();
+})
+```
+
+使用
+
+```js
+//sq1语句
+var sql="INSERT INTO cate（name，status，create time）VALUES（？，？，？）"；
+//数据
+var sqlArr=['菜鸟工具，‘啥子，23453'，2020-08-31T84：21：33.000z]；var callback=function（err，data）{
+if(err){
+	console.log（“失败"）；return；else{
+	res.send（data）；
+	}
+}；
+//调用函数
+sqlConnect(sql，sqlArr，callback)；
+```
+
+## 接口返回封装
+
+```js
+class Result {
+    // 给写默认值好处理
+    constructor({ code:200, msg = 'ok' } = {}) {
+        // 定义一些常用的错误信息返回，
+        // 可以在其他文件定义好引进来，方便管理
+        this.msg = Object.assign({ code: msg }, {
+            10000: 'missing parammeter',
+            10001: 'parameter type is wrong',
+            10002: 'you do not have right to edit this page',
+        });
+    }
+    successFn(result) {
+      return {
+        success: true,
+        result,
+      };
+    }
+    fail(code) {
+      return {
+        success: false,
+        code,
+        msg: this.msg[code],
+      };
+    }
+}
+```
 
