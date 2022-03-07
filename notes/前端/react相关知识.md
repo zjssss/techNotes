@@ -571,6 +571,13 @@ React Hooks就是加强版的函数组件，我们可以完全不使用 `class`�
 
 在`useState()`中，它接受状态的初始值作为参数，即上例中计数的初始值，它返回一个数组，其中数组第一项为一个变量，指向状态的当前值。类似`this.state`,第二项是一个函数，用来更新状态,类似`setState`。该函数的命名，我们约定为`set`前缀加状态的变量名
 
+第二个参数最好写成参数的形式，因为他会被当前的上下文的环境所影响，拿不到最新的值
+
+```js
+const [ count, setCount ] = useState(0)
+ setCount((count)=>count+=1)
+```
+
 **计数器例子**
 
 ```js
@@ -672,7 +679,11 @@ useEffect()也是为函数组件提供了处理副作用的钩子。依然我们
 useEffect(() => {},[array])
 ```
 
-`useEffect()`接受两个参数，第一个参数是你要进行的异步操作，第二个参数是一个数组，用来给出Effect的依赖项。只要这个数组发生变化，`useEffect()`就会执行。当第二项省略不填时，`useEffect()`会在每次组件渲染时执行。这一点类似于类组件的`componentDidMount`。下面我们通过代码模拟一个异步加载数据。
+`useEffect()`接受两个参数，第一个参数是你要进行的异步操作，第二个参数是一个数组，用来给出Effect的依赖项。只要这个数组发生变化，`useEffect()`就会执行。当第二项省略不填时，`useEffect()`会在每次组件渲染时执行。这一点类似于类组件的`componentDidMount`。
+
+
+
+下面我们通过代码模拟一个异步加载数据。
 
 ```js
 import React, { useState, useEffect } from 'react'
@@ -737,6 +748,14 @@ export default PersonPage
 	componentDidMount()
 	componentDidupdate（）
 	componentwi11unmount（）
+
+##### useCallback和userMemo
+
+useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量（返回值），useCallback返回缓存的函数。
+
+useMemo是在render期间执行的。所以不能进行一些额外的副操作，比如网络请求等。传递一个创建函数和依赖项，创建函数会需要返回一个值，只有在依赖项发生改变的时候，才会重新调用此函数，返回一个新的值。
+
+
 
 ##### ref hook
 

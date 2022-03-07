@@ -98,3 +98,18 @@ git update-index --no-assume-unchanged /path/to/file
 #### 修改提交
 
 git commit --amend -m "新的修改提交信息"
+
+#### git merge origin master和git merge origin/master的区别
+
+git merge branchA branchB, branchB 一般默认为当前branch，所以
+
+```js
+git merge origin master //将origin merge 到 master 上
+git merge origin/master //将origin上的master分支 merge 到当前 branch 上
+```
+
+一般进行merge操作时，最好先checkout到你希望进行merge操作的分支，也就是branchB上，然后再进行
+
+```awk
+git merge branchA //默认为当前branch，即branchB
+```

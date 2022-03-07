@@ -1,55 +1,3 @@
-### 架构模式
-
-#### mvc
-
-MVC：Model   View   Controller
-
-MVC模式的意思是，软件工程可以分成三个部分，进行单向数据流
-
-- 视图（View）：用户界面。
-- 控制器（Controller）：业务逻辑；在Controller里面把Model的数据赋值给View来显示（或者是View接收用户输入的数据然后由Controller把这些数据传给Model来保存到本地或者上传到服务器）。
-- 模型（Model）：数据保存，获取数据的地方
-
-通信方式：所有通信都是单向的
-
-1. View 传送指令到 Controller
-2. Controller 完成业务逻辑后，要求 Model 改变状态
-3. Model 将新的数据发送到 View，用户得到反馈
-
-缺点：Controller里面的代码非常臃肿且难以维护
-
-#### mvvm
-
-MVVM：Model、View、ViewModel
-
-主要就是MVC中Controller演变成MVVM中的viewModel
-
- MVVM与MVC最大的区别就是：它实现了View和Model的自动同步，是双向数据流
-
-**优点：**
-
-1. 双向绑定技术，当Model变化时，View-Model会自动更新，View也会自动变化。很好的做到数据的一致性
-
-2. 由于控制器的功能大都移动到View上处理，大大的对控制器进行了瘦身
-
-3. View的功能进一步强化，具有控制的部分功能
-
-**缺点**
-
-1. 数据绑定也使得bug很难被调试。比如你看到页面异常了，有可能是你的View的代码有bug，也可能是你的model的代码有问题。数据绑定使得一个位置的Bug被快速传递到别的位置，要定位原始出问题的地方就变得不那么容易了。
-
-2. 数据双向绑定不利于代码重用。客户端开发最常用的是View，但是数据双向绑定技术，让你在一个View都绑定了一个model，不同的模块model都不同。那就不能简单重用view了
-
-3. 一个大的模块中model也会很大，虽然使用方便了也很容易保证数据的一致性，但是长期持有，不释放内存就造成话费更多的内存。
-
-#### mvvm双向绑定
-
-（1）发布订阅者的设计模式: 一般通过发布和订阅消息的方式实现数据和视图的绑定监听，更新数据方式通常做法是 vm.set(‘property’, value)。
-
-（2）脏值检查: angular.js 是通过脏值检测的方式比对数据是否有变更，来决定是否更新视图，在指定的事件触发时进入脏值检测。
-
-（3）数据劫持: vue.js 则是采用数据劫持结合发布订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
-
 ### vue的指令
 
 #### 常用指令
@@ -176,8 +124,6 @@ getCon.$el.parentNode.removeChild(getCon.$el);
 import showPopover from './$popover';
 showPopover(obj)
 ```
-
-
 
 ### this.$set
 
@@ -346,8 +292,6 @@ router.beforeEach 是页面加载之前，相反router.afterEach是页面加载�
 
 router-link默认是触发router.push(location)，如果设置的replace 则触发router.replace(location)
 
-
-
 router.push() ：导航跑到不同的URL,这个方法会向history栈添加一个新的记录，所以，当用户点击浏览器后退按钮时，则回到之前的url.
 
 router.replace(): 跟router.push作用是一样的，但是，它不会向history添加新记录，而是跟它的方法名一样替换掉当前的history记录.
@@ -498,25 +442,9 @@ computed: {
 当用户指定了watch中的deep属性为true时，如果当时监控的属性是数组类型，会对对象中的每一项进行求值，此时会将当前watcher存入到对应属性的依赖中，这样数组中对象发生变化时也会通知数据更新。
 内部原理就是递归，耗费性能
 
-### 双向绑定（vue源码）
 
-#### 原理
 
-是通过数据劫持+订阅发布者模式实现的
-数据劫持：指的是在修改或者访问某个对象的属性时，通过代码拦截劫持，然后进行修改返回这个最后的结果
-订阅发布者模式：对象数据之间存在着一对多的相互依赖对应关系，当一个数据发生改变时，所有的依赖对象都会收到通知。
-vue2.x使用Object.defineProperty();（有缺陷，无法检测到对象属性的新增或删除，不能监听数组的变化）
-vue3.x使用es6的Proxy;
-
-#### 区别
-
-Proxy代理整个对象，Object.defineProperty只代理对象上的某个属性，所以遍历对象的每个属性
-
-对象上定义新属性时，Proxy可以监听到，Object.defineProperty监听不到。
-
-数组新增删除修改时，Proxy可以监听到，Object.defineProperty监听不到
-
-#### 几种方式
+#### 双向绑定的几种方式
 
 **1  v-model**
 
@@ -984,24 +912,6 @@ vue是组件级更新，如果不采用异步更新，那么每次更新数据�
 
 为了性能考虑，vue会在本轮数据更新后，再去异步更新视图
 
-### nextTick原理(源码)
-
-##### 原理
-
-nextTick主要是使用了宏任务和微任务，定义了一个异步方法。多次调用nextTick会将方法存入队列中，通过这个异步方法清空当前队列，所以nextTick就是异步方法
-
-在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
-
-##### 应用
-
-新的dom没有更新但是需要基于这个dom做操作，需要用到这个nextTick这个api
-
-可以帮助我们在created里实现获取页面元素
-
-当项目中你想在改变DOM元素的数据后基于新的dom做点什么，对新DOM一系列的js操作都需要放进Vue.nextTick()的回调函数中
-
-
-
 ### 何时需要使用beforeDestroy？
 
 可能在当前组件使用了$on方法，需要在组件销毁前解绑
@@ -1027,11 +937,7 @@ v-for会比v-if的优先级高一些，如果连用的话，会把v-if给每个�
 
 渲染组件时，会通过Vue.extend方法构建子组件的构造函数，并进行实例化，最终手动调用$mount进行挂载。更新组件时会进行patchVnode流程，核心就是diff算法。
 
-### **v-model的实现原理及如何自定义v-model？**
 
-v-model可以看成是value+input方法的语法糖
-
-其核心就是，一方面modal层通过defineProperty来劫持每个属性，一旦监听到变化通过相关的页面元素更新。另一方面通过编译模板文件，为控件的v-model绑定input事件，从而页面输入能实时更新相关data属性值。
 
 ### **Vue中事件绑定的原理**
 
@@ -1492,3 +1398,49 @@ export default {
 
 - provide`和`inject`提供依赖注入，功能类似 2.x 的`provide/inject
 - 实现跨层级组件(祖孙)间通信
+
+## vue源码原理
+
+### 双向绑定
+
+是通过数据劫持+订阅发布者模式实现的
+数据劫持：指的是在修改或者访问某个对象的属性时，通过代码拦截劫持，然后进行修改返回这个最后的结果
+订阅发布者模式：对象数据之间存在着一对多的相互依赖对应关系，当一个数据发生改变时，所有的依赖对象都会收到通知。
+
+#### vue2
+
+使用Object.defineProperty();（有缺陷，无法检测到对象属性的新增或删除，不能监听数组的变化）
+
+#### vue3
+
+使用es6的Proxy，更加高效并且提高了性能
+
+#### 区别
+
+Proxy代理整个对象，Object.defineProperty只代理对象上的某个属性，所以遍历对象的每个属性
+
+对象上定义新属性时，Proxy可以监听到，Object.defineProperty监听不到。
+
+数组新增删除修改时，Proxy可以监听到，Object.defineProperty监听不到
+
+### nextTick
+
+#### 原理
+
+nextTick主要是使用了宏任务和微任务，定义了一个异步方法。多次调用nextTick会将方法存入队列中，通过这个异步方法清空当前队列，所以nextTick就是异步方法
+
+在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM
+
+#### 应用
+
+新的dom没有更新但是需要基于这个dom做操作，需要用到这个nextTick这个api
+
+可以帮助我们在created里实现获取页面元素
+
+当项目中你想在改变DOM元素的数据后基于新的dom做点什么，对新DOM一系列的js操作都需要放进Vue.nextTick()的回调函数中
+
+### v-model原理
+
+v-model可以看成是value+input方法的语法糖
+
+其核心就是，一方面modal层通过defineProperty来劫持每个属性，一旦监听到变化通过相关的页面元素更新。另一方面通过编译模板文件，为控件的v-model绑定input事件，从而页面输入能实时更新相关data属性值。

@@ -679,6 +679,136 @@ Map 是有序的键值对，其中的键允许是任何类型。与 Set 相似�
 
 Weak Map 是只能包含对象类型的键的特殊 Map 。与 Weak Set 相似，键的对象引用是弱引用，因此当它是某个对象的仅存引用时，也不会屏蔽垃圾回收。当键被回收之后，所关联的值也同时从 Weak Map 中被移除。
 
+##### 应用场景
+
+###### set
+
+- 集合是一种**无序且唯一**的数据结构；
+- `ES6` 中有集合，名为 `Set` ；
+- **集合的常用操作：** 去重、判断某元素是否在集合中、求交集……
+
+**模拟并集运算**
+
+```js
+const union = （setA， setB) => {
+    const unionab = new Set()
+    setA.forEach(value => unionab.add(value))
+    setB.forEach(value => unionab.add(value))
+    return [...unionab]
+}
+
+console.log(union([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[1, 2, 5, 8,9, 4, 10]
+```
+
+**模拟交集运算**
+
+```js
+const intersection = (setA, setB) => {
+    const intersectionSet = new Set()
+    const arrSetB = new Set(setB)
+    setA.forEach(value => {
+        if (arrSetB.has(value)) {
+            intersectionSet.add(value)
+        }
+    })
+    return [...intersectionSet]
+}
+
+console.log(intersection([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[5,8,9]
+```
+
+**模拟差集运算**
+
+```js
+const difference = (setA, setB) => {
+    const differenceSet = new Set()
+    const arrSetB = new Set(setB)
+    setA.forEach(value => {
+        if (!arrSetB.has(value)) {
+            differenceSet.add(value)
+        }
+    })
+    return [...differenceSet]
+}
+
+console.log(difference([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[1, 2]
+```
+
+**使用扩展运算符来模拟并集、交集和差集**
+
+如果使用扩展运算符来进行运算的话，整个过程只需要三个步骤：
+
+- 将集合转化为数组；
+- 执行需要的运算；
+- 将结果转化回集合。
+
+**用扩展运算符实现并集**
+
+```js
+const union = (setA, setB) => {
+    return new Set([...setA, ...setB]);
+}
+console.log(union([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[1, 2, 5, 8,9, 4, 10]
+```
+
+**用扩展运算符实现交集**
+
+```js
+const intersection = (setA, setB) => {
+    const arrB = new Set(setB);
+    return [...setA].filter(x => arrB.has(x));
+}
+console.log(intersection([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[5, 8, 9]
+
+```
+
+**用扩展运算符实现差集**
+
+```js
+const difference = (setA, setB) => {
+    const arrB = new Set(setB)
+   return [...setA].filter(x => !arrB.has(x));
+}
+console.log(difference([1, 2, 5, 8, 9], [4, 5, 8, 9, 10])) //[1, 2]
+
+```
+
+###### map
+
+- 字典与**集合**相似，**字典**也是一种**存储唯一值**的数据结构，但它是以**键值对**的形式来存储。
+- 注意：字典一定是以**键值对**的形式存储！！
+
+**ES6中的Map可以做什么呢？**
+
+- 使用 `Map` 对象： `new` 、 `set` 、 `delete` 、 `clear` ；
+- 字典的常用操作，**键值对的增删改查**。
+
+```js
+const map = new Map()
+
+//增
+map.set('monday', '星期一')
+map.set('Tuesday', '星期二')
+map.set('Wednesday', '星期三')
+
+console.log(map.has('monday')) //true
+console.log(map.size) //3
+console.log(map.keys()) //输出{'monday', 'Tuesday', 'Wednesday'}
+console.log(map.values()) //输出{'星期一', '星期二', '星期三'}
+console.log(map.get('monday')) //星期一
+
+//删
+map.delete('monday')
+
+//清空
+map.clear()
+
+//改
+map.set('monday', '星期四')
+```
+
+
+
 ##### proxy
 
 ###### 定义
@@ -1390,5 +1520,11 @@ if (condition) {
 ```js
 import(f())
 .then(...);
+```
+
+##### 可选链操作符
+
+```js
+const name = obj?.name;
 ```
 
