@@ -166,81 +166,23 @@ this.$set(this.items[index],"flag", !item.flag)
 
 ### 组件传值
 
-主要分为两类：1.父子组件间的传值   2.非父子组件间的传值
-
 1 父组件使用v-bind进行数据的绑定，子组件中通过定义props接收对应的数据
-2 使用$children和$parents获取子组件和父组件对象
+
+2 使用$emit进行子组件给父组件传值
+
+3 使用$children和$parents获取子组件和父组件对象
 
 **$children** 指代的是子组件，返回的是一个组件集合
 
 **$parent** 指代的是父组件 ，返回的是一个组件集合
 
-```js
-<template>
-<div>
-  <button @click="parentClick">点击访问父组件</button>
-</div>
-</template>
-<script>
-export default {
-  data(){
-    return {
-      msg:"test1"
-    }
-  },
-  methods: {
-    parentClick(){
-        this.$parent.funa("xx")
-       console.log(this.$parent.total);
-    }
-  }
-}
-</script>
-```
+4 使用$ref获取指定的子组件
 
-3 使用$ref获取指定的子组件
+5eventbus事件总线
+6 vuex
+7 路由传值
 
-```js
-<template>
-<div>
-  <testVue ref="test"></testVue>   
-  <testVue2></testVue2> 
-  <button @click="clickChild1">$refs方式获取子组件值</button> 
-  <button @click="clickChild2">$children方式获取子组件值</button>
-</div>
-</template>
-<script>
-import testVue from './test'
-import testVue2 from './test2'
-export default {
-  data(){
-    return {
-      total: 108
-    }
-  },
-  components: {
-    testVue,
-    testVue2  
-  },
-  methods: {
-    funa(e){
-        console.log("index",e)
-    },
-    clickChild1(){
-      console.log(this.$refs.test.msg);
-    },
-    clickChild2(){
-        console.log(this.$children[0].msg);
-        console.log(this.$children[1].msg);
-    }
-  }
-}
-</script>
-```
-
-4 eventbus事件总线
-5 vuex
-6 路由传值
+8 provide/ inject
 
 ### vue的路由
 
@@ -571,6 +513,61 @@ document.getElementById(‘app‘).appendChild(component.$el)
          }
       }
      },
+```
+### provide/ inject
+
+`provide`/ `inject` 是vue2.2.0新增的api, 简单来说就是父组件中通过`provide`来提供变量, 然后再子组件中通过`inject`来注入变量
+
+```vue
+// A.vue
+
+<template>
+  <div>
+	<comB></comB>
+  </div>
+</template>
+
+<script>
+  import comB from '../components/test/comB.vue'
+  export default {
+    name: "A",
+    provide: {
+      for: "demo"
+    },
+    components:{
+      comB
+    }
+  }
+</script>
+
+```
+
+```vue
+// B.vue
+
+<template>
+  <div>
+    {{demo}}
+    <comC></comC>
+  </div>
+</template>
+
+<script>
+  import comC from '../components/test/comC.vue'
+  export default {
+    name: "B",
+    inject: ['for'],
+    data() {
+      return {
+        demo: this.for
+      }
+    },
+    components: {
+      comC
+    }
+  }
+</script>
+
 ```
 
 ### 事件总线

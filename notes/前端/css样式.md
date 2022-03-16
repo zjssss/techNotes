@@ -1,4 +1,4 @@
-### 查询属性兼容性
+## 查询属性兼容性
 
 https://caniuse.com/
 
@@ -17,7 +17,9 @@ https://caniuse.com/
 - `box-sizing: content-box` 是W3C盒子模型
 - `box-sizing: border-box` 是IE盒子模型
 
-#### 弹性布局
+## flex布局
+
+轴性布局，是一维布局
 
 ##### 两个基本概念
 
@@ -108,7 +110,15 @@ stretch（默认值）：如果项目未设置高度或设为auto，将占满整
 
 定义单个项目自身在交叉轴上的排列方式，可以覆盖掉容器上的align-items属性
 
-#### CSS3新增伪类有那些
+## grid布局
+
+grid是二维布局
+
+#### 容器属性
+
+
+
+### CSS3新增伪类有那些
 
 p:first-of-type 选择属于其父元素的首个元素
 p:last-of-type 选择属于其父元素的最后元素
@@ -118,7 +128,7 @@ p:nth-child(2) 选择属于其父元素的第二个子元素
 :enabled :disabled 表单控件的禁用状态。
 :checked 单选框或复选框被选中。
 
-####  CSS3有哪些新特性？
+###  CSS3有哪些新特性？
 
 RGBA和透明度
 background-image background-origin(content-box/padding-box/border-box) background-size background-repeat
@@ -132,21 +142,19 @@ font-face属性：定义自己的字体
 
 transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜
 
-#### 为什么要初始化CSS样式
+### 为什么要初始化CSS样式
 
 因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
 
-#### 选择器优先级
 
-内联样式 > id选择器样式 > 类选择器样式 > 元素选择器样式
 
-#### rem
+### rem
 
 rem是相对长度单位
 相对于根元素(即html元素)font-size计算值的倍数的一个css单位
 默认浏览器以1rem=16px
 
-#### 雪碧图的优缺点
+### 雪碧图的优缺点
 
 优点：
 1 减少加载网页图片时对服务器的请求次数
@@ -156,32 +164,32 @@ rem是相对长度单位
 2 适应性差
 3 小图标在高清屏幕上可能会失真，另外频繁使用定位会占用比较多的CPU
 
-#### css文件引入方式 link 和@import 
+### css文件引入方式 link 和@import 
 
 (1) link属于HTML标签，而@import是CSS提供的; 
 (2) 页面被加载的时，link会同时被加载，而@import引用的CSS会等到页面被加载完再加载;
 (3) import只在IE5以上才能识别，而link是HTML标签，无兼容问题; 
 (4) link方式的样式的权重 高于@import的权重.
 
-#### relative和absolute
+### relative和absolute
 
 absolute  生成绝对定位的元素， 相对于最近一级的 定位不是 static 的父元素来进行定位
 fixed  生成绝对定位的元素，相对于浏览器窗口进行定位
 relative  生成相对定位的元素，相对于其在普通流中的位置进行定位
 static  默认值。没有定位，元素出现在正常的流中
 
-#### 优雅降级 渐进增强
+### 优雅降级 渐进增强
 
 优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会检查以确认它们是否能正常工作。由于IE独特的盒模型布局问题，针对不同版本的IE的hack实践过优雅降级了,为那些无法支持功能的浏览器增加候选方案，使之在旧式浏览器上以某种形式降级体验却不至于完全失效.
 
 渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能,向页面增加无害于基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。
 
-#### display:none visibility:hidden
+### display:none visibility:hidden
 
 display:none  隐藏对应的元素，在文档布局中不再给它分配空间
 visibility:hidden  隐藏对应的元素，但是在文档布局中仍保留原来的空间
 
-#### 关于浮动
+### 关于浮动
 
 浮动元素脱离文档流，不占据空间。
 
@@ -290,5 +298,160 @@ text-overflow:ellipsis;
 {
     font-family: consolas;
   }
+```
+
+## css选择器
+
+#### 元素选中规则
+
+css选择器只能选中本身/后面的兄弟/后代元素
+
+不能选中父元素，除非用js实现
+
+:focus-within 也是一个经过子元素选择父元素的伪类，只不过条件只能是子元素是否获取焦点
+
+```js
+form:focus-within{
+    background-color:black;
+}
+```
+
+CSS伪类 :has() 就有这个功能，虽然还处于草案阶段，可是仍是能够提早了解一下
+
+#### 选择器优先级
+
+内联样式 > id选择器样式 > 类选择器样式 > 元素选择器样式
+
+#### 相邻兄弟选择器(+)
+
+选择紧接在另一元素后的元素，且二者有相同父元素
+
+```css
+<ul>
+    <li>List item 1</li>
+    <li>List item 2</li>
+    <li>List item 3</li>
+  </ul>
+  <ol>
+    <li>List item 1</li>
+    <li>List item 2</li>
+    <li>List item 3</li>
+  </ol>
+```
+
+首先分析选择器样式：li+li{}，字面意思是选取所有位于li标签后的第一个li元素
+
+- 很显然第一个li不会被选中，因为它前面不是li
+- 第二个li会被选中，因为它是第一个li标签紧邻的li标签
+- 第三个li也会被选中，因为第三个li标签的上一个标签也是li标签，也满足li+li{}的条件：li标签后的第一个li标签
+
+注：前端面包屑导航中经常用到该选择器
+
+#### 兄弟选择器（~），又称匹配选择器
+
+查找某一个指定元素的后面的**所有兄弟节点**
+
+**可以发现虽然这两个选择器都表示兄弟选择器，但是‘+’选择器则表示某元素后相邻的兄弟元素，也就是紧挨着的，是单个的（特殊情况：循环多个）。而‘~’选择器则表示某元素后所有同级的指定元素，强调所有的。**
+
+#### 后代选择器
+
+后代选择器是用空格分隔多个选择器组合,它的作用是在A选择器的后代中找到B选择器所指的元素
+
+#### 子选择器(>)
+
+只能选择作为某元素儿子元素的元素（直接子元素），不包括孙元素、曾孙元素等等等
+
+#### 交集选择器
+
+交集选择器是为了找两个或多个选择器的交集,用法就是把两个选择器放在一起,语法"选择器A选择器B"
+
+```css
+.list-item.active{
+    color:red;
+    font-size:20px
+}
+```
+
+#### 并集选择器
+
+并集选择器是为了合并类型的样式，可以多个选择器写同一种样式
+
+```css
+H1,H2,P{
+    margin:0;
+    padding:0;
+}
+```
+
+
+
+#### 伪类选择器
+
+##### :first-child
+
+用于选取属于其父元素的首个子元素的指定选择器
+
+只要E元素是它的父级的第一个子元素，就选中。它需要同时满足两个条件，一个是“**第一个子元素**”，另一个是“**这个子元素刚好是E**”
+
+```js
+ <div class="one">
+    <div class="two">two</div>
+    <div class="three">three</div>
+  </div>
+```
+
+```css
+.two:first-child{
+      color: red;
+    }
+```
+
+##### :nth-child(n)
+
+该选择器选取父元素的第 N 个子元素，与类型无关
+
+```js
+<div class="one">
+    <div class="two">two</div>
+    <div class="two">two_2</div>
+    <div class="three">three</div>
+  </div>
+```
+
+```css
+    .two:nth-child(1){
+      color: red;
+    }
+```
+
+#### 伪元素选择器
+
+::before
+
+::after
+
+伪元素构造的元素是虚拟的,所以不能使用js去操作
+
+在CSS3 中规定, 伪类用一个冒号 (:) 表示, 伪元素用两个冒号 (::)来表示
+
+#### 属性选择器
+
+可以为拥有指定属性的 HTML 元素设置样式
+
+```html
+ <div class="one">
+    <div class="two" title="hello">two</div>
+    <div class="two" data-color="blue">two_2</div>
+    <div class="three">three</div>
+  </div>
+```
+
+```css
+ div[title='hello']{
+      color: red;
+    }
+    div[data-color='blue']{
+      color: blue;
+    }
 ```
 
