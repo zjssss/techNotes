@@ -4,18 +4,45 @@ https://caniuse.com/
 
 #### 盒模型
 
-##### W3C的标准盒模型
+总元素的宽度=width+左&右填充padding+左&右边框border+左&右边距margin
 
-默认模型，width指content部分的宽度
+总元素的高度=height+顶部&底部填充+上&下边框+上&下边距
+
+##### w3c盒模型
+
+box-sizing: content-box
+
+其实就是默认的，将padding、border、margin的值不 算入width和 height里面去。
+
+margin0)x-sizing: content-box
+
+标准模式下，一个块的宽度 = width+padding(内边距)+border(边框)+margin(外边距)
+
+box-sizing: content-box
+
+其实就是默认的，将padding、border、margin的值不 算入width和 height里面去。
 
 ##### IE的盒模型
 
-在IE盒子模型中，width表示content+padding+border这三个部分的宽度
+box-sizing:border-box
 
-##### 切换模型
+就会将padding、border、margin的值算入width和 height里面去了，使得 总元素的宽度 = width的值 、总元素的高度 = height。
 
-- `box-sizing: content-box` 是W3C盒子模型
-- `box-sizing: border-box` 是IE盒子模型
+##### 计算尺寸
+
+一个盒子的 margin 为 20px，border 为 1px，padding 为 10px，content 的宽为 200px、高为 50px，
+
+如果用标准 W3C 盒子模型解释，那么这个盒子需要占据的位置为：
+宽 20*2+1*2+10*2+200=262px、高 20*2+1*2*10*2+50=112px，*
+*盒子的实际大小为：宽 1*2+10*2+200=222px、高 1*2+10*2+50=72px；*
+
+如果用IE 盒子模型，那么这个盒子需要占据的位置为：
+宽 20*2+200=240px、高 20*2+50=70px，
+盒子的实际大小为：宽 200px、高 50px。
+
+
+
+
 
 ## flex布局
 

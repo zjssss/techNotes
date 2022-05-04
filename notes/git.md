@@ -65,11 +65,11 @@ git config --global credential.helper store
 
 #### 忽略某个文件的提交
 
-git update-index --assume-unchanged /path/to/file
+git update-index --assume-unchanged ‘/d/path/to/file’
 
 #### 取消忽略某个文件的提交
 
-git update-index --no-assume-unchanged /path/to/file
+git update-index --no-assume-unchanged  '/d/path/to/file'
 
 #### git stash使用
 
