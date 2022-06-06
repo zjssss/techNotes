@@ -1,28 +1,28 @@
 ## React入门
 
-##### 学习react之前要掌握的javascript基础知识
+> 学习react之前要掌握的javascript基础知识
 
 判断this指向    class（类）   es6语法规范   npm包管理器
 原型 原型链   数组常用方法   模块化
 
-##### react的特点
+> react的特点
 
 采用组件化模式，声明式编码，提高开发效率以及组件复用率
 在ReactNative中可以采用react语法进行原生移动端开发
 使用虚拟dom+优秀的diff算法，尽量减少与真实dom的交互
 
-##### react高效的原因
+> react高效的原因
 
 使用虚拟dom，不总是直接操作页面的真实dom
 diff算法，最小化页面重绘
 
-##### 相关的js库
+> 相关的js库
 
 react.js       react核心库
 react-dom.js   提供操作dom的react扩展库
 babel.min.js    解析jsx语法代码转化为js代码的库 
 
-##### react创建虚拟dom的两种方式
+> react创建虚拟dom的两种方式
 
 jsx的语法
 
@@ -42,9 +42,9 @@ let vdom = React.createElement('h1',{id:'title'},React.createElement('span',{},'
 ReactDOM.render(vdom,document.getElementById('app'))
 ```
 
-##### react组件的两种方式
+> react组件的两种方式
 
-###### 函数式组件
+**函数式组件**
 
 适用于简单组件的定义（无状态，没有this，没有实例）
  函数式组件的this指向式undefined，因为babel编译后开启了严格模式
@@ -52,7 +52,7 @@ ReactDOM.render(vdom,document.getElementById('app'))
   1.React解析组件标签，找到了该函数组件。
   2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DoM，随后呈现在页面中。
 
-###### 类式组件
+**类式组件**
 
 适用于复杂组件的定义（有状态，有this(指向实例对象)，有实例）
 	类组件中this的指向是组件的实例对象，react在执行过程中会自动帮我们生成一个实例
@@ -60,14 +60,14 @@ ReactDOM.render(vdom,document.getElementById('app'))
 	1.React解析组件标签，找到了MyComponent组件。
 	2.发现组件是使用类定义的，随后new出来该类的实例，并通过该实例调用到原型上的render方法。
 
-##### 改变react类组件中类方法的this指向的两种方法
+> 改变react类组件中类方法的this指向的两种方法
 
 由于javascript类中的方法自动开启严格模式，所以类方法的this指向的是undefined
 所以类组件中的自定义方法的this都是undefined，需要手动改变this指向到当前的组件实例上
  1 在类构造器中使用bind方法改变this指向并重新赋值
  2 在类中定义方法时，使用箭头函数统一this指向
 
-##### setState的两种形式
+**setState的两种形式**
 
 对象式的setState
 
@@ -84,23 +84,25 @@ this.setstate（(state,props)=>（{count:state.count+1}））
 
 
 
-##### react组件的三大核心属性
+> react组件的三大核心属性
 
-###### state
+**state**
 
 state是组件最重要的属性，是一个对象；同时state是一个状态机，通过更新state来更新页面
 
-###### props
+**props**
 
 用于组件传值，是一个只读属性。每个组件都有一个props属性，保存着组件标签的所有属性
 
-###### ref（不要过度使用）
+**ref（不要过度使用）**
 
 ​	字符串形式的ref(存在效率问题，已过时) 
 ​	回调函数形式的ref(用函数接收参数重新赋值，分为内联和类绑定式) 
 ​	使用createRef这个api创建
 
-#####     几种ref的写法
+
+
+> 几种ref的写法
 
 ```jsx
 1 ref="input" this.refs.input
@@ -108,7 +110,9 @@ state是组件最重要的属性，是一个对象；同时state是一个状态�
 3 ref={this.myref}  myref = React.createRef()
 ```
 
-##### react中的事件处理
+
+
+> react中的事件处理
 
 1 指定的事件需要驼峰大小写
 2 react使用的是自定义事件，不是dom原生事件----为了更好的兼容性
@@ -116,17 +120,19 @@ state是组件最重要的属性，是一个对象；同时state是一个状态�
 4 事件本身会像原生事件一个传递一个事件源参数，不需要过度使用ref属性
 5 react事件的使用，本身是给事件传递一个回调函数。所以当需要传参时，需要在函数体返回一个函调函数(高阶函数)或者直接在事件后面写一个回调函数再调用定义好的函数
 
-##### 受控组件和非受控组件的区别
+> 受控组件和非受控组件的区别
 
-###### 受控组件
+**受控组件**
 
 在React中，每当表单的状态发生变化时，都会被写入到组件的state中，这种组件在React被称为受控组件。
 
-###### 非受控组件
+**非受控组件**
 
 在React中，非受控组件是一种反模式，它的值不受组件自身的state或者props控制，通常需要为其添加ref prop来访问渲染后的底层DOM元素。
 
-##### react表单提交高级写法(高阶函数和函数柯里化)
+
+
+> react表单提交高级写法(高阶函数和函数柯里化)
 
 ```js
 saveFormData=(dataType)=>{
@@ -138,7 +144,7 @@ return(event)=>{
 <input onChange={ this. saveFormData(' password')}/>
 ```
 
-##### react生命周期（旧）
+> react生命周期（旧）
 
 1.初始化阶段：由ReactDoM.render（）触发---初次渲染
 	1.constructor（）
@@ -153,7 +159,7 @@ return(event)=>{
 3.卸载组件：由ReactDOM.unmountComponentAtNode（）触发
 	1.componentWi11Unmount（）
 
-##### react生命周期（新）
+> react生命周期（新）
 
 1.初始化阶段：由ReactDoM.render（）触发---初次渲染
 	1.constructor（）
@@ -169,20 +175,22 @@ return(event)=>{
 3.卸载组件：由ReactDOM.unmountComponentAtNode（）触发
 	1.componentwi11Unmount（）=====>常用一般在这个钩子中做一些收尾的事，例如：关闭定时器、取消订阅消息
 
-##### react样式的模块化
+
+
+> react样式的模块化
 
 1 把css文件后缀改成index.module.css
   引入的时候：import hello from 'index.module.css'，生成一个对象  
   使用：hello.类名
 2 使用预处理器嵌套，在最外层套一个不一样的类型即可
 
-##### react组件传值
+> react组件传值
 
 父传子：在父组件的子组件标签上传递一个值xxx，子组件通过通过props接收(this.props.xxx)
 子传父：在父组件定义一个函数func，再传递给子组件；需要传值的时候子组件通过props调用该函数					(this.props.func())
 兄弟组件(任意组件)：发布者-订阅者模式(消息订阅模式)，引入pubsub.js这个库
 
-##### todoList案例相关知识点
+> todoList案例相关知识点
 
 1.拆分组件、实现静态组件，注意：className、style的写法
 2.动态初始化列表，如何确定将数据放在哪个组件的state中？
@@ -194,11 +202,11 @@ return(event)=>{
 4.注意defaultchecked和checked的区别，类似的还有：defaultValue和 value
 5.状态在哪里，操作状态的方法就在哪里
 
-##### context
+> context
 
 一种组件间通信方式，常用于祖组件与后代组件间的通信
 
-##### component的两个问题（组件优化）
+> component的两个问题（组件优化）
 
 1.只要执行setState（），即使不改变状态数据，组件也会重新render（）==>效率低
 2.只当前组件重新render（），就会自动重新render子组件，纵使子组件没有用到父组件的任何数据==>效率低
@@ -209,14 +217,14 @@ return(event)=>{
 	1 手动在shouldComponentUpdate里面进行state或者props的判断
 	2 使用pureComponent替代Component
 
-##### prueComponent
+> prueComponent
 
 PureComponent重写了shouldcomponentUpdate（），只有state或props数据有变化才返回true
 注意：
 	只是进行state和props数据的浅比较，如果只是数据对象内部数据变了，返回false
 	不要直接修改state数据，而是要产生新数据
 
-##### 如何向组件内部动态传入带内容的结构=====插槽
+> 如何向组件内部动态传入带内容的结构=====插槽
 
 Vue中：
 	使用slot技术，也就是通过组件标签体传入结构 <A> <B/> </A>
@@ -224,7 +232,9 @@ React中：
 	使用children props：通过组件标签体传入结构
 	使用render props：通过组件标签属性传入结构，一般用render函数属性  
 
-##### children props
+
+
+> children props
 
 ```jsx
 <A>
@@ -234,7 +244,9 @@ React中：
 问题：如果B组件需要A组件内的数据，==>做不到
 ```
 
-##### render props
+
+
+> render props
 
 ```jsx
 <A render={（data）=><C data={data}></C>}></A>
@@ -242,7 +254,9 @@ A组件：{this.props.render（内部state数据）}
 c组件：读取A组件传入的数据显示{this.props.data}
 ```
 
-##### 组件通信方式总结
+
+
+> 组件通信方式总结
 
 1.props：
 	（1）.children props
@@ -256,7 +270,9 @@ c组件：读取A组件传入的数据显示{this.props.data}
 
 ## react路由
 
-##### react路由(路由组件与一般组件)
+
+
+> react路由(路由组件与一般组件)
 
 直接在app文件引入路由库，在app组件包裹一个<browerRouter>或<hashRouter>
 
@@ -270,7 +286,9 @@ c组件：读取A组件传入的数据显示{this.props.data}
 	一般组件：写组件标签时传递了什么，就能收到什么
 	路由组件：接收到三个固定的属性(history,location,match)
 
-##### BrowserRouter与HashRouter的区别
+
+
+> BrowserRouter与HashRouter的区别
 
 1.底层原理不一样：
 	BrowserRouter使用的是H5的history API，不兼容IE9及以下版本。
@@ -282,7 +300,9 @@ c组件：读取A组件传入的数据显示{this.props.data}
 	（2）.HashRouter刷新后会导致路由state参数的丢失！！！
 4.备注：HashRouter可以用于解决一些路径错误相关的问题。
 
-##### react路由的NavLink与封装NavLink
+
+
+> react路由的NavLink与封装NavLink
 
 1.NavLink可以实现路由链接的高亮，通过activeClassName指定样式名
 2.标签体内容是一个特殊的标签属性
@@ -295,7 +315,7 @@ c组件：读取A组件传入的数据显示{this.props.data}
 
 
 
-##### react路由传参
+> react路由传参
 
 1.params参数
 	路由链接（携带参数）：<Link to='/demo/test/tom/18'}>详情</Link>
@@ -310,7 +330,7 @@ c组件：读取A组件传入的数据显示{this.props.data}
 	注册路由（无需声明，正常注册即可）：<Route path="/demo/test"component={Test}/>
 	接收参数：this.props.location.state备注：刷新也可以保留住参数
 
-##### 编程时路由导航
+> 编程时路由导航
 
 ```
 push跳转+携带params参数
@@ -321,7 +341,9 @@ push跳转+携带state参数
 	this.props.history.push（"/home/message/detai1，{id，title}）
 ```
 
-##### 一般组件加工成路由组件
+
+
+> 一般组件加工成路由组件
 
 ```json
 import{withRouter}from'react-router-dom'
@@ -331,7 +353,9 @@ export default withRouter（Header）
 //withRouter的返回值是一个新组件
 ```
 
-##### 路由懒加载
+
+
+> 路由懒加载
 
 ```jsx
 从react中引入lazy，Suspense
@@ -344,28 +368,28 @@ export default withRouter（Header）
 
 ## redux
 
-##### 什么是redux
+> 什么是redux
 
 1.redux是一个专门用于状态管理的JS库（不是react插件库）。
 2.它可以用在react，angular，vue等项目中，但基本与react配合使用。
 3.作用：集中式管理react应用中多个组件共享数据的状态。	
 
-##### redux三大原则
+> redux三大原则
 
 （1）单一数据源，一个应用只有一个 store，保存着state
 （2）State 是只读的，唯一改变 state 的方法是触发 action
 （3）通过纯函数来修改，编写reducer函数来修改state。reducer函数接收前一次的 state 和 action，返回新的state
 
-##### redux身上挂载的4个方法
+> redux身上挂载的4个方法
 
 1 createStore 用于创建仓库的函数，接收两个参数
 2 applymiddleWare createStore的第二个参数，配合redux-thunk开启异步action功能。是一个中间件函数，参数是thunk插件
 3 combineReducers 合并所有的reducer的函数，参数是一个对象
 4 bindActionCreators合并所有的action
 
-##### redux三个核心概念
+> redux三个核心概念
 
-######  action
+**action**
 
 1.动作的对象
 2.包含2个属性
@@ -373,13 +397,13 @@ export default withRouter（Header）
 	data：数据属性，值类型任意，可选属性
 3.例子：{type:'ADD_STUDENT，data:{name:'tom'，age：18}}
 
-######  reducer
+**reducer**
 
 reducer是一个函数
 1.用于初始化状态、加工状态。
 2.加工时，根据旧的state和action，产生新的state的纯函数，返回新的状态。
 
-###### store
+**store**
 
 1.将state、action、reducer 联系在一起的对象
 2.此对象的功能？(store上挂载的三个方法)
@@ -387,7 +411,9 @@ reducer是一个函数
 2）dispatch（action）：分发action，触发reducer 调用，产生新的 statee
 3）subscribe（listener）：注册监听，当产生了新的state时，自动调用
 
-##### redux基本流程
+
+
+> redux基本流程
 
 用户通过界面组件 触发ActionCreator，携带Store中的旧State与Action 流向Reducer,Reducer返回新的state，并更新界面
 
@@ -478,7 +504,7 @@ store.subscribs(()=>{
 
 #### react-redux
 
-##### react-redux的相关描述
+> react-redux的相关描述
 
 1.所有的UI组件都应该包裹一个容器组件，他们是父子关系。
 2.容器组件是真正和redux打交道的，里面可以随意的使用redux的api。
@@ -486,7 +512,9 @@ store.subscribs(()=>{
 4.容器组件会传给U组件：（1）.redux中所保存的状态。（2）.用于操作状态的方法。
 5.备注：容器给UI传递：状态、操作状态的方法，均通过props传递。
 
-##### react-redux的基本流程
+
+
+> react-redux的基本流程
 
 1 创建一个 UI组件,用于连接UI组件和redux（核心）
 
@@ -542,7 +570,7 @@ UI组件此时相当于子组件，一切的状态和方法，都可以通过pro
 
 ##  hooks
 
-##### 纯函数组件的特点
+> 纯函数组件的特点
 
 - 纯函数组件**没有状态**
 - 纯函数组件**没有生命周期**
@@ -551,23 +579,25 @@ UI组件此时相当于子组件，一切的状态和方法，都可以通过pro
 
 这就注定，我们所推崇的函数组件，只能做UI展示的功能，涉及到状态的管理与切换，我们不得不用类组件或者redux
 
-##### 类函数组件的特点
+> 类函数组件的特点
 
 - 大型组件很难拆分和重构，也很难测试。
 - 业务逻辑分散在组件的各个方法之中，导致重复逻辑或关联逻辑。
 - 组件类引入了复杂的编程模式，比如 render props 和高阶组件。
 
-##### react hooks出现的原因
+> react hooks出现的原因
 
 为了解决这种，*类组件功能齐全却很重，纯函数很轻便却有上文几点重大限制*，React团队设计了**React Hooks**
 
 React Hooks就是加强版的函数组件，我们可以完全不使用 `class`，就能写出一个全功能的组件
 
-##### 什么是hooks
+> 什么是hooks
 
 用函数的形式代替原来的继承类的形式，并且使用预函数的形式管理`state`，有Hooks可以不再使用类的形式定义组件了。这时候你的认知也要发生变化了，原来把组件分为有状态组件和无状态组件，有状态组件用类的形式声明，无状态组件用函数的形式声明。那现在所有的组件都可以用函数来声明了，即所有的组件都可以使用函数的形式进行编写
 
-##### useState():状态钩子
+#### reacthook钩子
+
+> useState():状态钩子
 
 在`useState()`中，它接受状态的初始值作为参数，即上例中计数的初始值，它返回一个数组，其中数组第一项为一个变量，指向状态的当前值。类似`this.state`,第二项是一个函数，用来更新状态,类似`setState`。该函数的命名，我们约定为`set`前缀加状态的变量名
 
@@ -598,7 +628,11 @@ const AddCount = () => {
 export default AddCount 
 ```
 
-##### useContext():共享状态钩子
+
+
+
+
+> useContext():共享状态钩子
 
 该钩子的作用是，在组件之间共享状态。关于Context这里不再赘述，其作用就是可以做状态的分发，在React16.X以后支持，避免了react逐层通过Props传递数据
 
@@ -628,7 +662,9 @@ const B =() => {
 export default Ceshi 
 ```
 
-##### useReducer():Action钩子
+
+
+> useReducer():Action钩子
 
 在使用React的过程中，如遇到状态管理，我们一般会用到Redux,而React本身是不提供状态管理的。而`useReducer()`为我们提供了状态管理。首先，关于redux我们都知道，其原理是我们通过用户在页面中发起action,从而通过reducer方法来改变state,从而实现页面和状态的通信。而Reducer的形式是`(state, action) => newstate`。类似，我们的`useReducer()`是这样的
 
@@ -671,7 +707,9 @@ export default AddCount
 
 通过代码我们看到了，我们使用`useReducer()`代替了Redux的功能，但`useReducer`无法为我们提供中间件等功能，加入你有这些需求，还是需要用到redux。
 
-##### useEffect():副作用钩子
+
+
+> useEffect():副作用钩子
 
 useEffect()也是为函数组件提供了处理副作用的钩子。依然我们会把请求放在componentDidMount里面，在函数组件中我们可以使用useEffect()
 
@@ -749,7 +787,9 @@ export default PersonPage
 	componentDidupdate（）
 	componentwi11unmount（）
 
-##### useCallback和userMemo
+
+
+> useCallback和userMemo
 
 useMemo和useCallback都会在组件第一次渲染的时候执行，之后会在其依赖的变量发生改变时再次执行；并且这两个hooks都返回缓存的值，useMemo返回缓存的变量（返回值），useCallback返回缓存的函数。
 
@@ -757,13 +797,15 @@ useMemo是在render期间执行的。所以不能进行一些额外的副操作�
 
 
 
-##### ref hook
+> ref hook
 
 （1）Ref Hook可以在函数组件中存储/查找组件内的标签或任意其它数据
 （2）语法：const refcontainer=useRef（）
 （3）作用：保存标签对象，功能与React.createRef（）一样
 
-##### 创建自己的Hooks
+
+
+> 创建自己的Hooks
 
 ```js
 import React, { useState, useEffect } from 'react'
@@ -812,7 +854,7 @@ export default PersonPage
 
 #### react-hooks全局数据管理
 
-##### 步骤
+> 步骤
 
 1. 创建全局的`rootReducer`。多个`reducer`合并到一起
 
@@ -822,7 +864,9 @@ export default PersonPage
 
 4. 子组件使用`const {state,dispatch} = useContext(RootContext)`获取全局的数据
 
-##### 代码
+
+
+> 代码
 
 1. 创建全局的`rootReducer`。多个`reducer`合并到一起
 
@@ -940,17 +984,21 @@ return (
 
 ## dva
 
-#### 简介
+> 简介
 
 dva 是一个基于 [redux](https://github.com/reduxjs/redux) 和 [redux-saga](https://github.com/redux-saga/redux-saga) 的数据流方案，然后为了简化开发体验，dva 还额外内置了 [react-router](https://github.com/ReactTraining/react-router) 和 [fetch](https://github.com/github/fetch)，所以也可以理解为一个轻量级的应用框架。
 
 dva = React-Router + Redux + Redux-saga ;
 
-#### Dva 核心概念
+
+
+> Dva 核心概念
 
 **基于 Redux 理念的数据流向**。 用户的交互或浏览器行为通过 dispatch 发起一个 action，如果是同步行为会直接通过 Reducers 改变 State，如果是异步行为（可以称为副作用）会先触发 Effects 然后流向 Reducers 最终改变 State。
 
-#### dva获取与修改公共状态里的数据
+
+
+> dva获取与修改公共状态里的数据
 
 获取数据
 
@@ -1091,7 +1139,7 @@ export default connect(mapStateToProps)(IndexPage);
 
 ## react脚手架配置网络代理总结
 
-##### 在package.json中追加如下配置
+> 在package.json中追加如下配置
 
 ```
 "proxy":"http://localhost:5000"
@@ -1101,7 +1149,9 @@ export default connect(mapStateToProps)(IndexPage);
 	3. 工作方式：上述方式配置代理，当请求了3000不存在的资源时，那么该请求会转发给5000 （优先匹配前端资源）
 ```
 
-##### 创建代理配置文件(src/setupProxy.js)
+
+
+> 创建代理配置文件(src/setupProxy.js)
 
 ```js
 const proxy = require('http-proxy-middleware')
